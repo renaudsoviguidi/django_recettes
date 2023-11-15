@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/dataTable.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
+    <script src="{% static 'js/dataTable.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    
+    <title>RECETTES || LISTE</title>
+</head>
+<body>
+    <h2 class="text-center">Liste des recettes <a href="{% url 'recettes.create' %}" class="btn btn-sm btn-primary"><i class="bi bi-plus"></i></a></h2>
+    <div class="container p-2">
+        <div class="row">
+            <div class="card py-3">
+                <table class="myTable table table-bordered table-hover table-responsive" id="index_recettes">   
+                    <thead>
+                    <tr>
+                        <th scope="col">N°</th>
+                        <th scope="col">Nom agent</th>
+                        <th scope="col">Nom plat</th>
+                        <th scope="col">Url Video</th>
+                        <th scope="col">Ingredients</th>
+                        <th scope="col">Étapes Préparation</th>
+                        <th scope="col">Temps de préparation</th>
+                        <th scope="col" class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in recettes %}
+                    <tr>
+                        <td scope="row">{{ forloop.counter }}</td>
+                        <td>{{ item.nom_agent }}</td>
+                        <td>{{ item.nom_plat }}</td>
+                        <td>{{ item.url_video }}</td>
+                        <td>{{ item.ingredients }}</td>
+                        <td>{{ item.etapes_preparation }}</td>
+                        <td>{{ item.time }}</td>
+                        <td class="text-center">
+                            <a href="{% url 'recettes.edit' item.id %}" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i></a>
+                            <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal_{{ item.id }}"><i class="bi bi-trash"></i></a>
+                            <!-- Modal pour la supression -->
+                            <div class="modal fade modal-centered" id="exampleModal_{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Suppression</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    Êtes-vous sûr de vouloir supprimer la recette <b>{{ item.nom_plat }}</b> ?
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+                                    <a href="{% url 'recettes.delete' item.id %}" class="btn btn-danger"><i class="bi bi-trash"></i>Oui</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                             <!--End modal pour la supression -->
+                        </td>
+                    </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.5/sweetalert2.all.min.js"></script>
+
+
+<script>
+  $(document).ready(function () {
+        if(window.navigator.language == 'fr-FR'){
+            var table = $('#index_recettes').DataTable({
+                lengthMenu: [5,10],
+                language: {
+                url: "{% static 'js/dataTableFrench.js' %}"
+                }
+            });
+        } else {
+            var table = $('#index_recettes').DataTable({
+                lengthMenu: [5,10],
+            });
+        }
+    });
+</script>
+
+{% load sweetify %}
+{% sweetify %}
+</body>
+</html>

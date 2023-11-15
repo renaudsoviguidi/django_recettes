@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/dataTable.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
+    <script src="{% static 'js/dataTable.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    
+    <title>RECETTES || AJOUTER</title>
+</head>
+<body>
+    
+    <div class="container p-3">
+        <div class="row">
+            <div class="card py-3">
+                <h4 class="text-center mb-2">Ajouter une recette</h4>
+                <form action="{% url 'recettes.store' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="nom_agent" class="form-label">Nom agent</label>
+                                <input type="text" class="form-control" name="nom_agent" id="nom_agent">
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                  <label for="nom_plat" class="form-label">Nom plat</label>
+                                  <input type="text" class="form-control" name="nom_plat" id="nom_plat">
+                                </div>
+                              <div class="col-md-3 mb-3">
+                                <label for="url_video" class="form-label">Url Video</label>
+                                <input type="text" class="form-control" name="url_video" id="url_video">
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                <label for="telephone" class="form-label">Time</label>
+                                <input type="number" class="form-control" name="time" id="time">
+                                </div>
+                              <div class="mb-3">
+                                  <label for="ingredients" class="form-label">Ingredients</label>
+                                  <textarea name="ingredients" id="ingredients" cols="10" rows="5" class="form-control"></textarea>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="etapes_preparation" class="form-label">Étapes Préparation</label>
+                                  <textarea name="etapes_preparation" id="etapes_preparation" cols="10" rows="5" class="form-control"></textarea>
+                              </div>
+                              
+                              <div>
+                                <button type="submit" class="btn btn-sm btn-primary">Ajouter</button>
+                              <a href="{% url 'recettes.index' %}" class="btn btn-sm btn-secondary">Retour</a>  
+                              </div>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.5/sweetalert2.all.min.js"></script>
+
+{% load sweetify %}
+{% sweetify %}
+</body>
+</html>
